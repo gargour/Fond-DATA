@@ -27,7 +27,10 @@ def test_revenue_by_country():
         ]
     )
     report = revenue_by_country(orders)
-    assert report.set_index("country")["revenue"].to_dict() == {"France": 3.0, "Tunisia": 25.0}
+    assert report.set_index("country")["revenue"].to_dict() == {
+        "France": 3.0,
+        "Tunisia": 25.0,
+    }
 
 
 def test_negative_quantity_is_rejected():
@@ -35,26 +38,6 @@ def test_negative_quantity_is_rejected():
     clean, rejected = clean_orders(orders)
     assert list(clean["order_id"]) == [2]
     assert list(rejected["reject_reason"]) == ["invalid_quantity"]
-
-
-def test_duplicate_order_is_rejected():
-    orders = make_orders([{"order_id": 1}, {"order_id": 1}, {"order_id": 2}])
-    clean, rejected = clean_orders(orders)
-    assert len(clean) == 2
-    assert list(rejected["reject_reason"]) == ["duplicate_order_id"]
-
-
-def test_country_is_normalised():
-    orders = make_orders([{"order_id": 1, "country": " france"}, {"order_id": 2, "country": "FRANCE "}])
-    clean, rejected = clean_orders(orders)
-    assert list(clean["country"]) == ["France", "France"]
-    assert len(rejected) == 0
-
-
-def test_check_schema_stops_on_missing_column():
-    orders = make_orders([]).rename(columns={"unit_price": "price"})
-    with pytest.raises(DataQualityError):
-        check_schema(orders)
 
 
 def test_duplicate_order_is_rejected():
