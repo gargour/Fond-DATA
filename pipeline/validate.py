@@ -26,12 +26,9 @@ def check_schema(df):
 
 def check_reject_rate(n_total, n_rejected, max_rate=MAX_REJECT_RATE):
     """Stop if too large a share of the rows was rejected."""
-    if n_total == 0:
-        return
-    
     rate = n_rejected / n_total
     if rate > max_rate:
         raise DataQualityError(
-            f"Reject rate is {rate:.0%} ({n_rejected}/{n_total} rows rejected), "
-            f"which exceeds the maximum allowed limit of {max_rate:.0%}."
+            f"Reject rate {rate:.0%} is above the limit of {max_rate:.0%} "
+            f"({n_rejected} of {n_total} rows)"
         )
