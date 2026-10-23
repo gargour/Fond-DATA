@@ -10,8 +10,8 @@ stages:
       nfiles: 3
     - path: pipeline
       hash: md5
-      md5: 98d57fdfc216940fb22786d10499e024.dir
-      size: 9317
+      md5: 27982723dc8d3923f37834ff096d5d9d.dir
+      size: 9333
       nfiles: 9
     - path: run_pipeline.py
       hash: md5
